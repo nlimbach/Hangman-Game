@@ -30,13 +30,44 @@
         //Only add guess to gueses if it doesn't already exist
         if (currentWord.indexOf(userGuess) >=0 )
         {
-            //update underscore to contain letter
-            console.log(currentWord.indexOf(userGuess));
 
-            underscores[currentWord.indexOf(userGuess)] = userGuess;
+
+            console.log("how many occurances" + count(currentWord,userGuess));
+
+
+            var userGuessIndex =currentWord.indexOf(userGuess);
+
+            //update underscore to contain letter
+
+
+
+                console.log(currentWord.indexOf(userGuess));
+
+                underscores[currentWord.indexOf(userGuess)] = userGuess;
+
+
+
+
+                for (var i = 1; i < count(currentWord, userGuess); i++) {
+                    var wordWithoutOccurance;
+
+
+                    //figure out how the fuck to do multiple
+                    wordWithoutOccurance = currentWord.substr(0, userGuessIndex) + currentWord.substr(userGuessIndex + 1);
+
+
+                    var findNewIndex = wordWithoutOccurance.indexOf(userGuess);
+
+                    console.log("newIndex" + findNewIndex);
+                    underscores[findNewIndex + i] = userGuess;
+
+
+                }
 
             hyphenLoc['textContent'] = underscores.join(" ");
+
         }
+
         else {
             //letter does not exist in word - update guess bank
             if (guess.indexOf(userGuess) >= 0) {
@@ -50,4 +81,11 @@
 
         }
 
+    }
+
+
+    //checks to see how many times character exists in string
+    function count(string,char) {
+        var re = new RegExp(char,"gi");
+        return string.match(re).length;
     }
