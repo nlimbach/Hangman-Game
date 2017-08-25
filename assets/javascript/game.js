@@ -6,11 +6,15 @@
     var currentWord = wordArray[Math.floor(Math.random() * wordArray.length)];
 
     var currentWordLength = currentWord.length;
+    var guessLeft = currentWordLength;
 
     var hyphenLoc = document.getElementById("placeholder");
+    var guessesLeftLocation = document.getElementById("guessesLeft");
 
+    var winsLocation = document.getElementById("wins");
 
-
+    winsLocation['textContent'] = wins;
+    guessesLeftLocation['textContent'] = guessLeft;
     console.log(currentWord);
     console.log(currentWordLength);
 
@@ -23,65 +27,93 @@
         hyphenLoc['textContent'] = underscores.join(" ");
 
 
-    document.onkeyup = function(event) {
-        var userGuess = event.key;
-        var guessLoc = document.getElementById("guesses");
+        document.onkeyup = function(event) {
+            var userGuess = event.key;
+            var guessLoc = document.getElementById("guesses");
 
-        //Only add guess to gueses if it doesn't already exist
-        if (currentWord.indexOf(userGuess) >=0 )
-        {
+          //Check if userGuess exists in current word
+            if (currentWord.indexOf(userGuess) >=0 )
+            {
 
+                // If userguess exists than replace underscore with userGuess
 
-            console.log("how many occurances" + count(currentWord,userGuess));
+                var userGuessIndex =currentWord.indexOf(userGuess);
 
-
-            var userGuessIndex =currentWord.indexOf(userGuess);
-
-            //update underscore to contain letter
+                //update underscore to contain letter
 
 
 
-                console.log(currentWord.indexOf(userGuess));
+                    underscores[currentWord.indexOf(userGuess)] = userGuess;
 
-                underscores[currentWord.indexOf(userGuess)] = userGuess;
+                    //output underscore array with updated userGuesses
+                     hyphenLoc['textContent'] = underscores.join(" ");
 
+                    // if userGuess occurs multiple times, replace each underscore with userGuess
 
-
-
-                for (var i = 1; i < count(currentWord, userGuess); i++) {
-                    var wordWithoutOccurance;
-
-
-                    //figure out how the fuck to do multiple
-                    wordWithoutOccurance = currentWord.substr(0, userGuessIndex) + currentWord.substr(userGuessIndex + 1);
+                    for (var i = 1; i < count(currentWord, userGuess); i++) {
+                        var wordWithoutOccurance;
 
 
-                    var findNewIndex = wordWithoutOccurance.indexOf(userGuess);
+                        //figure out how the fuck to do multiple
+                        wordWithoutOccurance = currentWord.substr(0, userGuessIndex) + currentWord.substr(userGuessIndex + 1);
 
-                    console.log("newIndex" + findNewIndex);
-                    underscores[findNewIndex + i] = userGuess;
+
+                        var findNewIndex = wordWithoutOccurance.indexOf(userGuess);
+
+                        console.log("newIndex" + findNewIndex);
+                        underscores[findNewIndex + i] = userGuess;
+
+
+                        //output underscore array with updated userGuesses
+                        hyphenLoc['textContent'] = underscores.join(" ");
+
+                    }
+
+                hyphenLoc['textContent'] = underscores.join(" ");
+
+                if(underscores.indexOf(userGuess) < 0 ){
+                    alert("you win");
+                    wins++
+                }
+
+                winsLocation['textContent'] = wins;
+                //end game if user guessed the word
+
+            }
+
+            else {
+                    if (guessLeft === 1) {
+                        guess = guess + " " + userGuess;
+                        guessLoc['textContent'] = guess;
+                        guessLeft = guessLeft - 1;
+                        guessesLeftLocation['textContent'] = guessLeft;
+                        alert("You lose!");
+                    }
+
+                    //letter does not exist in word - update guess bank
+                    else if (guess.indexOf(userGuess) >= 0) {
+                        alert("You already guessed " + userGuess);
+                    }
+
+                    else {
+                        guess = guess + " " + userGuess;
+                        guessLoc['textContent'] = guess;
+                        guessLeft = guessLeft - 1;
+                        guessesLeftLocation['textContent'] = guessLeft;
+
+
+                    }
 
 
                 }
 
-            hyphenLoc['textContent'] = underscores.join(" ");
+
+
+
+
+
 
         }
-
-        else {
-            //letter does not exist in word - update guess bank
-            if (guess.indexOf(userGuess) >= 0) {
-                alert("You already guessed " + userGuess);
-            }
-
-            else {
-                guess = guess + " " + userGuess;
-            }
-            guessLoc['textContent'] = guess;
-
-        }
-
-    }
 
 
     //checks to see how many times character exists in string
@@ -89,3 +121,4 @@
         var re = new RegExp(char,"gi");
         return string.match(re).length;
     }
+
