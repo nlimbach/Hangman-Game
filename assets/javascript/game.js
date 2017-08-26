@@ -1,6 +1,7 @@
 
     var guess = "";
     var wins = 0;
+
     var underscores = ["_ "];
     var wordArray = ["television", "couch","light", "lotion", "cupboard", "baseball", "restaurant", "dragon", "thrones", "queen", "grinder"];
     var currentWord = wordArray[Math.floor(Math.random() * wordArray.length)];
@@ -18,7 +19,7 @@
     console.log(currentWord);
     console.log(currentWordLength);
 
-
+    var guessLoc = document.getElementById("guesses");
     //populates correct number of underscores based on the random word chose
 
       for(var i = 1; i < currentWordLength; i++) {
@@ -29,7 +30,7 @@
 
         document.onkeyup = function(event) {
             var userGuess = event.key;
-            var guessLoc = document.getElementById("guesses");
+
 
           //Check if userGuess exists in current word
             if (currentWord.indexOf(userGuess) >=0 )
@@ -71,13 +72,13 @@
 
                 hyphenLoc['textContent'] = underscores.join(" ");
 
-                if(underscores.indexOf(userGuess) < 0 ){
-                    alert("you win");
-                    wins++
+                if (underscores.indexOf("_ ") < 0 ){
+                    hyphenLoc['textContent'] = underscores.join(" ");
+                    wins++;
+                    alert("You won! The word is " + currentWord + ". ");
+                    startOver();
                 }
 
-                winsLocation['textContent'] = wins;
-                //end game if user guessed the word
 
             }
 
@@ -88,6 +89,7 @@
                         guessLeft = guessLeft - 1;
                         guessesLeftLocation['textContent'] = guessLeft;
                         alert("You lose!");
+                        startOver();
                     }
 
                     //letter does not exist in word - update guess bank
@@ -105,9 +107,16 @@
                     }
 
 
-                }
 
 
+
+
+
+
+            }
+
+            winsLocation['textContent'] = wins;
+            //end game if user guessed the word
 
 
 
@@ -122,3 +131,17 @@
         return string.match(re).length;
     }
 
+    function startOver() {
+        currentWord = wordArray[Math.floor(Math.random() * wordArray.length)];
+        guessLeft = currentWordLength;
+        guessesLeftLocation['textContent'] = guessLeft;
+        underscores = ["_ "];
+
+        for (var i = 1; i < currentWordLength; i++) {
+            underscores.push("_ ");
+        }
+
+        hyphenLoc['textContent'] = underscores.join(" ");
+        guess = "";
+        guessLoc['textContent'] = guess;
+    }

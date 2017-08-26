@@ -4,30 +4,26 @@
 <head>
     <meta charset="UTF-8">
     <title>Hangman Game</title>
-
+    <link rel="stylesheet" type = "text/css" href="assets/css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 
 </head>
 
 <body>
-
-        <nav class="navbar navbar-default">
-            <div class="container">
-                <div class="navbar-header navbar-left">
-                    <a class="navbar-brand" href="#">Hangman</a>
-                </div>
-            </div>
-        </nav>
+        <audio loop= "true" autoplay="true">
+            <source  src="assets/images/GotTheme.mp3" type="audio/mpeg" height="100%"/>
+        </audio>
+      
 
         <div class = "jumbotron">
-            <p class ="text-center">Let's play Hangman! Press any key to get started!</p>
+            <h1 class ="text-center">Let's Play Hangman!</h1>
         </div>
 
         <div class="row">
             <div class ="container">
 
 
-
+                <img src = "assets/images/GOT.jpg" class="img-responsive pull-right">
                 <p> Guess the word below:</p>
                 <p><span id ="placeholder"></span></p>
 
